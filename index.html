@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Global Event listener</title>
+  </head>
+  <body>
+    <button id="btn">Click me</button>
+    <br /><br />
+    <form action="/action_page.php">
+      <label for="text">Text Input</label><br />
+      <input type="text" id="text" name="text" onfocus="this.value=''" />
+      <br />
+      <br />
+      <input type="submit" value="Submit" />
+    </form>
+    <script>
+      document.addEventListener("submit", function (e) {
+        e.preventDefault();
+        let val = document.getElementById("text").value;
+        let pattern = /^(\d|\w)+$/;
+        let result = pattern.test(val);
+        if (result === true) {
+          var elemDiv = document.createElement("div");
+          elemDiv.classList.add("div");
+          elemDiv.innerText = val;
+          document.body.appendChild(elemDiv);
+          let btn = document.createElement("button");
+          btn.classList.add("btn");
+          btn.innerHTML = "Click Me to Delete";
+          elemDiv.insertBefore(btn, elemDiv.firstChild);
+        } else {
+          alert("Enter matching text");
+        }
+      });
+      document.addEventListener("click", function (event) {
+        if (event.target.id == "btn") {
+          var elemDiv = document.createElement("div");
+          elemDiv.classList.add("div");
+          elemDiv.innerText = "div";
+          document.body.appendChild(elemDiv);
+        }
+        if (event.target.classList.contains("div")) {
+          alert(event.target.innerText);
+        }
+      });
+      document.addEventListener("click", function (e) {
+        if (
+          (event.target.nodeName === "BUTTON") &
+          (event.target.id !== "btn")
+        ) {
+          e.target.parentElement.remove();
+        }
+      });
+    </script>
+  </body>
+</html>
